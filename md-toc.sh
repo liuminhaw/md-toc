@@ -58,6 +58,9 @@ gen_toc() {
     local _toc_remove_count=$((_TOC_SPACING * _max_level))
 
     grep -E "^#{${_max_level:-1},${_min_level:-2}} " <${_input} |
+        sed 's/`//g' |
+        sed 's/"//g' |
+        sed "s/'//g" |
         sed -E 's/(#+) (.+)/\1:\2:\2/g' |
         awk -F ":" -v n="${_TOC_SPACING}" 'BEGIN {
             rep = ""
@@ -136,6 +139,7 @@ main() {
     local _min_heading_level=${2}
     if [[ ${#} -eq 3 ]]; then
         _file=${3}
+        # file validation
         if [[ ! -f ${_file} ]]; then
             echo -e "[ERROR] File not found: ${_file}" 1>&2
             exit 2
@@ -144,6 +148,7 @@ main() {
         _file=/dev/stdin
     fi
 
+    # Check max and min heading levels are numbers
     if [[ ! ${_max_heading_level} =~ ^-?[0-9]+$ || ! ${_min_heading_level} =~ ^-?[0-9]+$ ]]; then
         echo -e "[ERROR] Heading level should be number between 1 and 6" 1>&2
         exit 2
