@@ -14,7 +14,7 @@ show_help() {
     cat <<EOF
 Generate table of contents of markdown content from given file or stdin.
 
-Usage: ${0##*/} [OPTIONS]... MAX_HEADING_LEVEL MIN_HEADING_LEVEL [FILE]
+Usage: ${0##*/} [OPTIONS]... MAX_HEADING_LEVEL MIN_HEADING_LEVEL [FILE|STDIN]
 
 Arguments:
   MAX_HEADING_LEVEL  Maximum heading level to include in the table of contents
